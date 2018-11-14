@@ -6,7 +6,7 @@
 /*   By: gricquie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 17:07:39 by gricquie          #+#    #+#             */
-/*   Updated: 2018/11/08 17:24:16 by gricquie         ###   ########.fr       */
+/*   Updated: 2018/11/08 18:48:42 by gricquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 
 # define BIN_STR(s) s, sizeof(s)
 
-# define TINY_MAX_SIZE 128
-# define SMALL_MAX_SIZE 1024
+# define TINY_MAX_SIZE 512
+# define SMALL_MAX_SIZE 2048
 
 # define FREE_MASK 0x1
 # define TYPE_MASK 0x6

@@ -6,7 +6,7 @@
 #    By: gricquie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/21 20:51:53 by gricquie          #+#    #+#              #
-#    Updated: 2018/11/08 18:16:49 by gricquie         ###   ########.fr        #
+#    Updated: 2018/11/14 16:28:02 by gricquie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,14 +53,22 @@ FLAGS = -Wall \
  		-Werror \
 		
 
-all : $(NAME)
+all: $(NAME)
 
-$(NAME) : $(OBJFULL) $(HEADERFULL) 
-	gcc $(FLAGS) -shared -o $(NAME) $(OBJFULL) -I $(HEADERDIR) -D_REENTRANT -lpthread
-	ln -s $(NAME) $(L_NAME)
+$(NAME): $(OBJFULL) $(HEADERFULL) 
+	gcc $(FLAGS) -shared -o $(NAME) $(OBJFULL) -I $(HEADERDIR) \
+		-D_REENTRANT -lpthread
+	ln -fs $(NAME) $(L_NAME)
+
+$(L_NAME): $(NAME)
 
 test: $(TEST_OBJ) $(OBJFULL) $(HEADERFULL)
 	gcc $(FLAGS) -o $(TEST_NAME) $(OBJFULL) $(TEST_OBJ) -I $(HEADERDIR)
+
+inject: $(L_NAME)
+	export DYLD_LIBRARY_PATH=.
+	export DYLD_INSERT_LIBRARIES="$(L_NAME)"
+	export DYLD_FORCE_FLAT_NAMESPACE=1
 
 $(ODIR)%.o : $(SDIR)%.c $(HEADERFULL)
 	@mkdir $(ODIR) 2> /dev/null || true
@@ -77,6 +85,7 @@ clean :
 fclean : clean
 	rm -f $(NAME)
 	rm -f $(L_NAME)
+	rm -f $(TEST_NAME)
 
 re : fclean all
 

@@ -6,7 +6,7 @@
 /*   By: gricquie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 16:25:56 by gricquie          #+#    #+#             */
-/*   Updated: 2018/11/08 18:11:53 by gricquie         ###   ########.fr       */
+/*   Updated: 2018/11/08 18:44:29 by gricquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_blk		*search_blk_in_page(t_page *page, size_t size)
 	{
 		if (!BLK_FREE(cur))
 		{
-			cur = (void *)cur + cur->blk_size;
+			cur = (void *)cur + BLK_SIZE(cur);
 			continue;
 		}
 		if (BLK_SIZE(cur) >= BLK_MIN_SIZE + size)

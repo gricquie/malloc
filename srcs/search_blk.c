@@ -6,7 +6,7 @@
 /*   By: gricquie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 19:37:51 by gricquie          #+#    #+#             */
-/*   Updated: 2018/11/08 18:12:27 by gricquie         ###   ########.fr       */
+/*   Updated: 2018/11/08 18:44:32 by gricquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ t_blk	*search_blk(size_t size)
 		{
 			blk = search_blk_in_page(cur, size);
 			if (blk)
+			{
 				return (blk);
+			}
 		}
 		cur = cur->next_page;
 	}
