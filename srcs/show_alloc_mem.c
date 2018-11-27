@@ -6,13 +6,13 @@
 /*   By: gricquie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 16:51:38 by gricquie          #+#    #+#             */
-/*   Updated: 2018/11/08 17:11:49 by gricquie         ###   ########.fr       */
+/*   Updated: 2018/11/14 20:08:38 by gricquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <malloc.h>
 
-static void		print_hexa(size_t x)
+/*static */void		print_hexa(size_t x)
 {
 	const char	hexa[16] = "0123456789ABCDEF";
 
@@ -21,7 +21,7 @@ static void		print_hexa(size_t x)
 	write(1, hexa + x % 16, 1);
 }
 
-static void		print_dec(size_t x)
+/*static */void		print_dec(size_t x)
 {
 	const char	dec[10] = "0123456789";
 

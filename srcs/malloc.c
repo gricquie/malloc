@@ -6,7 +6,7 @@
 /*   By: gricquie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 17:07:41 by gricquie          #+#    #+#             */
-/*   Updated: 2018/11/14 15:42:55 by gricquie         ###   ########.fr       */
+/*   Updated: 2018/11/16 20:10:33 by gricquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,16 @@ void	*malloc(size_t size)
 {
 	t_blk	*blk;
 
+DEBUG_STRING("malloc called\n");
 	size = PAD_SIZE(size);
-	if (size == 0)
-		size = 8;
+	if (size <= sizeof(t_blk) - BLK_MIN_SIZE)
+		size = sizeof(t_blk) - BLK_MIN_SIZE;
 	pthread_mutex_lock(&g_malloc_mutex);
 	blk = search_blk(size);
 	pthread_mutex_unlock(&g_malloc_mutex);
+if (!blk)
+DEBUG_STRING("malloc failed\n");
+else
+DEBUG_STRING("malloc end\n");
 	return (blk ? BLK_TO_MEM(blk) : NULL);
 }

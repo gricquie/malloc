@@ -3,14 +3,23 @@
 
 int main()
 {
-	int     i;
-	char    *addr;
+	size_t	i;
+	void	*ptr[4096];
+
 	i = 0;
-	while (i < 1024)
+	while (i < 4096)
+		ptr[i++] = calloc(1024, 1);
+
+	i = 0;
+	while (i < 4096)
 	{
-		addr = (char*)malloc(1024);
-		addr[0] = 42;
+		ptr[i] = realloc(ptr[i], 2048);
 		i++;
 	}
+
+	i = 0;
+	while (i < 4096)
+		free(ptr[i++]);
+
 	return (0);
 }

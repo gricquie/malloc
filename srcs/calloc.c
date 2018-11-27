@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_page_for_blk.c                                 :+:      :+:    :+:   */
+/*   calloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gricquie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/07 15:35:15 by gricquie          #+#    #+#             */
-/*   Updated: 2018/11/14 18:20:48 by gricquie         ###   ########.fr       */
+/*   Created: 2018/11/16 19:33:30 by gricquie          #+#    #+#             */
+/*   Updated: 2018/11/16 20:10:51 by gricquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <malloc.h>
 
-t_page	*get_page_for_blk(t_blk *blk)
+void	*calloc(size_t count, size_t size)
 {
-	t_page	*page;
+	void	*ptr;
+	size_t	i;
+	size_t	tot;
 
-	page = g_pages;
-	while (page && (void *)page + page->size < (void *)blk)
-		page = page->next_page;
-	return (page);
+DEBUG_STRING("calloc called\n");
+	tot = count * size;
+	ptr = malloc(tot);
+	if (ptr == NULL)
+		return (NULL);
+	i = 0;
+	while (i < tot)
+	{
+		*((size_t *)(ptr + i)) = 0;
+		i += sizeof(size_t);
+	}
+DEBUG_STRING("calloc end\n");
+	return (ptr);
 }

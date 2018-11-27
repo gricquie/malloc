@@ -6,7 +6,7 @@
 /*   By: gricquie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 16:36:18 by gricquie          #+#    #+#             */
-/*   Updated: 2018/11/08 18:12:14 by gricquie         ###   ########.fr       */
+/*   Updated: 2018/11/14 20:08:59 by gricquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,20 @@
 
 void	print_one_blk(const t_blk *blk)
 {
-	printf("blk		: %p\n", blk);
-	printf("prev_size	: %zx\n", blk->prev_blk_size);
-	printf("size		: %zx\n", BLK_SIZE(blk));
+	write(1, BIN_STR("blk	: 0x"));
+	print_hexa((size_t)blk);
+	write(1, BIN_STR("\nprev_size	: "));
+	print_dec(PREV_BLK_SIZE(blk));
+	write(1, BIN_STR("\nsize		: "));
+	print_dec(BLK_SIZE(blk));
 	if (BLK_FREE(blk))
-		printf("blk free\n");
+	{
+		write(1, BIN_STR("\nblk free\nprev_blk	: 0x"));
+		print_hexa((size_t)blk->prev_free_blk);
+		write(1, BIN_STR("\nnext_blk	: 0x"));
+		print_hexa((size_t)blk->next_free_blk);
+		write(1, BIN_STR("\n"));
+	}
 	else
-		printf("blk allocated\n");
-	if (BLK_FREE(blk))
-		printf("prev_blk	: %p\n", blk->prev_free_blk);
-	if (BLK_FREE(blk))
-		printf("next_blk	: %p\n", blk->next_free_blk);
-	printf("\n");
+		write(1, BIN_STR("\nblk allocated\n"));
 }

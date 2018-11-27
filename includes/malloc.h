@@ -6,23 +6,22 @@
 /*   By: gricquie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 17:07:39 by gricquie          #+#    #+#             */
-/*   Updated: 2018/11/08 18:48:42 by gricquie         ###   ########.fr       */
+/*   Updated: 2018/11/16 20:11:16 by gricquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
 
-////////////////////////////////////////////////////////////////////////////////
-# include <stdio.h>
-# define DEBUG (printf("file: %s -- line: %d\n", __FILE__, __LINE__));
+# define DEBUG 0
+# define DEBUG_STRING(s) (DEBUG ? write(1, BIN_STR(s)): 0)
 
 # include <unistd.h>
 # include <stddef.h>
 # include <sys/mman.h>
 # include <pthread.h>
 
-# define BIN_STR(s) s, sizeof(s)
+# define BIN_STR(s) s, sizeof(s) - 1
 
 # define TINY_MAX_SIZE 512
 # define SMALL_MAX_SIZE 2048
@@ -78,6 +77,7 @@ t_page			*g_pages;
 void	*malloc(size_t size);
 void	free(void *ptr);
 void	*realloc(void *ptr, size_t size);
+void	*calloc(size_t count, size_t size);
 
 size_t	get_page_size_for_size(size_t size);
 t_blk	*search_blk(size_t size);
@@ -98,5 +98,7 @@ void	show_alloc_mem(void);
 ///////////////////////////////////////////////////////////////////////
 void	print_one_blk(const t_blk *blk);
 void	show_all_mem(void);
+void	print_hexa(size_t n);
+void	print_dec(size_t n);
 
 #endif

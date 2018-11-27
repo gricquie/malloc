@@ -6,7 +6,7 @@
 #    By: gricquie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/21 20:51:53 by gricquie          #+#    #+#              #
-#    Updated: 2018/11/14 17:42:43 by gricquie         ###   ########.fr        #
+#    Updated: 2018/11/16 20:12:07 by gricquie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ TEST_OBJ = $(TEST_SRC:.c=.o)
 SRCS =	malloc.c \
 		free.c \
 		realloc.c \
+		calloc.c \
 		get_page_size_for_size.c \
 		get_type_for_size.c \
 		search_blk.c \
@@ -35,7 +36,6 @@ SRCS =	malloc.c \
 		get_page_for_blk.c \
 		show_alloc_mem.c \
 		print_blk.c \
-		show_all_mem.c \
 
 OBJS = $(SRCS:.c=.o)
 
