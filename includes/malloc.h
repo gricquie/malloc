@@ -14,7 +14,7 @@
 # define MALLOC_H
 
 int		malloc_debug;
-# define DEBUG  1
+# define DEBUG  malloc_debug
 # define DEBUG_STRING(s) (DEBUG ? write(1, BIN_STR(s)): 0)
 
 # include <unistd.h>

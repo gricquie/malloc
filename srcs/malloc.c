@@ -14,6 +14,7 @@
 
 t_page			*g_pages = NULL;
 pthread_mutex_t	g_malloc_mutex = PTHREAD_MUTEX_INITIALIZER;
+int				malloc_debug = 0;
 
 void	*malloc(size_t size)
 {
