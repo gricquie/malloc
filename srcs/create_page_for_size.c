@@ -31,10 +31,19 @@ t_page	*create_page_for_size(size_t size)
 		g_pages = page;
 		return (page);
 	}
+	if (page < g_pages)
+	{
+		page->next_page = g_pages;
+		g_pages->prev_page = page;
+		g_pages = page;
+		return (page);
+	}
 	cur = g_pages;
 	while (cur->next_page && cur->next_page < page)
 		cur = cur->next_page;
 	page->next_page = cur->next_page;
+	if (page->next_page)
+		page->next_page->prev_page = page;
 	page->prev_page = cur;
 	cur->next_page = page;
 	return (page);

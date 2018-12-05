@@ -43,7 +43,6 @@ static void	*reduce_blk_size(t_blk *blk, size_t size, t_page *page)
 	{
 		reduce_blk_size2(blk, next_blk, size, diff);
 		pthread_mutex_unlock(&g_malloc_mutex);
-DEBUG_STRING("realloc end reduce blk size, next blk augmented\n");
 		return (BLK_TO_MEM(blk));
 	}
 	if (diff >= sizeof(t_blk))
@@ -56,7 +55,6 @@ DEBUG_STRING("realloc end reduce blk size, next blk augmented\n");
 		new_blk->next_free_blk = get_next_free_blk(new_blk);
 	}
 	pthread_mutex_unlock(&g_malloc_mutex);
-DEBUG_STRING("realloc end reduce blk size\n");
 	return (BLK_TO_MEM(blk));
 }
 
@@ -69,8 +67,17 @@ static void	*augment_blk_size(t_blk *blk, size_t size, t_page *page)
 	next_blk = (void *)blk + BLK_SIZE(blk);
 	diff = size - BLK_SIZE(blk) + BLK_MIN_SIZE;
 	next_blk = ((void *)next_blk > (void *)page + page->size ? NULL : next_blk);
-	if (next_blk && BLK_FREE(next_blk))
+	if (next_blk && BLK_FREE(next_blk) && BLK_SIZE(next_blk) >= diff)
 	{
+		if (BLK_SIZE(next_blk) < diff + sizeof(t_blk))
+		{
+			blk->blk_size += BLK_SIZE(next_blk);
+			if (next_blk->prev_free_blk)	
+				next_blk->prev_free_blk->next_free_blk = next_blk->next_free_blk;
+			if (next_blk->next_free_blk)
+				next_blk->next_free_blk->prev_free_blk = next_blk->prev_free_blk;
+			return (BLK_TO_MEM(blk));
+		}
 		new_blk = (void *)next_blk + diff;
 		if (next_blk->prev_free_blk)
 			next_blk->prev_free_blk = new_blk;
@@ -82,11 +89,9 @@ static void	*augment_blk_size(t_blk *blk, size_t size, t_page *page)
 		blk->blk_size += diff;
 		new_blk->prev_blk_size = blk->blk_size;
 		pthread_mutex_unlock(&g_malloc_mutex);
-DEBUG_STRING("realloc end augment blk size, size augmented\n");
 		return (BLK_TO_MEM(blk));
 	}
 	pthread_mutex_unlock(&g_malloc_mutex);
-DEBUG_STRING("realloc end augment blk size, new malloc\n");
 	free(BLK_TO_MEM(blk));
 	return (malloc(size));
 }
@@ -105,12 +110,10 @@ DEBUG_STRING("realloc called\n");
 	pthread_mutex_lock(&g_malloc_mutex);
 	if (!(page = get_page_for_blk(blk)))
 	{
-DEBUG_STRING("realloc end, blk doesn't exist\n");
 		return (NULL);
 	}
 	if (BLK_FREE(blk))
 	{
-DEBUG_STRING("realloc end, blk not allocated\n");
 		return (NULL);
 	}
 	type = get_type_for_size(size);
@@ -124,6 +127,6 @@ DEBUG_STRING("realloc end, blk not allocated\n");
 		return (reduce_blk_size(blk, size, page));
 	else if (size > BLK_SIZE(blk) - BLK_MIN_SIZE)
 		return (augment_blk_size(blk, size, page));
-DEBUG_STRING("realloc called\n");
+DEBUG_STRING("realloc end\n");
 	return (BLK_TO_MEM(blk));
 }

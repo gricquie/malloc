@@ -30,7 +30,7 @@
 	write(1, dec + x % 10, 1);
 }
 
-static size_t	print_blk(const t_blk *blk)
+/*static */size_t	print_blk(const t_blk *blk)
 {
 	if (BLK_FREE(blk))
 		return (0);
@@ -50,7 +50,7 @@ static size_t	print_page(const t_page *page)
 	size_t		total;
 
 	if (page->type == tiny)
-		write(1, BIN_STR("TINY : 0x"));
+		write(1, BIN_STR("TINY  : 0x"));
 	else if (page->type == small)
 		write(1, BIN_STR("SMALL : 0x"));
 	else

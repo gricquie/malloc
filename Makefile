@@ -65,7 +65,7 @@ test: $(TEST_OBJ) $(OBJFULL) $(HEADERFULL)
 
 $(ODIR)%.o : $(SDIR)%.c $(HEADERFULL)
 	@mkdir $(ODIR) 2> /dev/null || true
-	gcc -o $@ -c $< $(FLAGS) -I $(HEADERDIR)
+	gcc -o $@ -c -fPIC $< $(FLAGS) -I $(HEADERDIR)
 
 $(TEST_OBJ) : $(TEST_SRC)
 	gcc -o $@ -c $< $(FLAGS) -I $(HEADERDIR)

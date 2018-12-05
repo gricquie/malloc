@@ -29,6 +29,6 @@ DEBUG_STRING("malloc called\n");
 if (!blk)
 DEBUG_STRING("malloc failed\n");
 else
-DEBUG_STRING("malloc end\n");
+DEBUG_STRING("malloc success\n");
 	return (blk ? BLK_TO_MEM(blk) : NULL);
 }

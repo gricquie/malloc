@@ -34,6 +34,8 @@ t_blk		*search_blk_in_page(t_page *page, size_t size)
 		if (!BLK_FREE(cur))
 		{
 			cur = (void *)cur + BLK_SIZE(cur);
+			if ((void *)cur >= (void *)page + page->size - BLK_MIN_SIZE)
+				return (NULL);
 			continue;
 		}
 		if (BLK_SIZE(cur) >= BLK_MIN_SIZE + size)

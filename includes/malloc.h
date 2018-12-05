@@ -13,7 +13,8 @@
 #ifndef MALLOC_H
 # define MALLOC_H
 
-# define DEBUG 0
+int		malloc_debug;
+# define DEBUG  1
 # define DEBUG_STRING(s) (DEBUG ? write(1, BIN_STR(s)): 0)
 
 # include <unistd.h>
@@ -28,7 +29,7 @@
 
 # define FREE_MASK 0x1
 # define TYPE_MASK 0x6
-# define SIZE_MASK 0x7
+# define SIZE_MASK 0xF
 # define BLK_SIZE(b) (b->blk_size & ~SIZE_MASK)
 # define BLK_FREE(b) (b->blk_size & FREE_MASK)
 # define BLK_TYPE(b) ((b->blk_size & TYPE_MASK) >> 1)
