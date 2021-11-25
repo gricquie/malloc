@@ -6,14 +6,14 @@
 /*   By: gricquie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 17:07:39 by gricquie          #+#    #+#             */
-/*   Updated: 2018/11/16 20:11:16 by gricquie         ###   ########.fr       */
+/*   Updated: 2021/11/25 17:40:28 by gricquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
 
-int		malloc_debug;
+extern int		malloc_debug;
 # define DEBUG  malloc_debug
 # define DEBUG_STRING(s) (DEBUG ? write(1, BIN_STR(s)): 0)
 
@@ -72,8 +72,8 @@ struct s_page
 	t_blk			blks[];
 };
 
-pthread_mutex_t	g_malloc_mutex;
-t_page			*g_pages;
+extern pthread_mutex_t	g_malloc_mutex;
+extern t_page			*g_pages;
 
 void	*malloc(size_t size);
 void	free(void *ptr);
@@ -96,7 +96,6 @@ size_t	get_page_size_for_type(int type);
 
 void	show_alloc_mem(void);
 
-///////////////////////////////////////////////////////////////////////
 void	print_one_blk(const t_blk *blk);
 void	show_all_mem(void);
 void	print_hexa(size_t n);

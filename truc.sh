@@ -1,4 +1,1 @@
-make &&
-export DYLD_FORCE_FLAT_NAMESPACE=1 && 
-export DYLD_LIBRARY_PATH=. &&
-export DYLD_INSERT_LIBRARIES=libft_malloc.so
+LD_PRELOAD=libft_malloc.so ls --color=tty -R
